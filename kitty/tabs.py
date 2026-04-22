@@ -60,7 +60,7 @@ from .progress import ProgressState
 from .tab_bar import TabBar, TabBarData, apply_title_template
 from .types import ac
 from .typing_compat import EdgeLiteral, SessionTab, SessionType, TypedDict
-from .utils import cmdline_for_hold, color_as_int, log_error, platform_window_id, resolved_shell, shlex_split, which
+from .utils import cmdline_for_hold, color_as_int, log_error, platform_window_id, resolved_shell, shlex_split, which, cache_dir
 from .window import CwdRequest, Watchers, Window, WindowCreationSpec, WindowDict, global_watchers
 from .window_list import WindowList
 
@@ -298,6 +298,14 @@ class Tab:  # {{{
         self.current_layout = self.create_layout_object(layout_name)
         self._current_layout_name = layout_name
         self.mark_tab_bar_dirty()
+
+        if get_options().save_layout :
+            try:
+                path = os.path.join(cache_dir(), f"layout_state_{self.os_window_id}")
+                with open(path, "w") as f:
+                    f.write(layout_name)
+            except Exception:
+                pass
 
     def startup(self, session_tab: SessionTab) -> None:
         self.allow_relayouts = False
