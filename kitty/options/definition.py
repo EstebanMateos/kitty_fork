@@ -536,30 +536,6 @@ as the scrollbar .
     dont show the progress bar
 ''')
 
-opt('save_layout', 'no',
-    option_type='to_bool', ctype='bool',
-    long_text='''
-When enabled, kitty writes the name of the current window layout to a temporary
-file under :file:`/tmp` for each instance.
-
-The file is uniquely identified using the :envvar:`KITTY_LISTEN_ON` environment
-variable, ensuring that multiple kitty instances do not interfere with each
-other.
-
-This feature is primarily intended for use by external tools and scripts that
-need to inspect the current layout state of a kitty instance, for example to
-adapt UI behavior based on whether a layout such as :code:`stack` is active.
-
-The file is updated whenever the layout changes via kitty actions such as
-:ac:`goto_layout` or :ac:`next_layout`.
-
-Note that the stored state is ephemeral and may be lost if the temporary
-directory is cleared (for example, on system reboot).
-
-This option does not restore the layout automatically.
-'''
-)
-
 opt('scrollback_pager', 'less --chop-long-lines --RAW-CONTROL-CHARS +INPUT_LINE_NUMBER',
     option_type='to_cmdline',
     long_text='''
@@ -2648,6 +2624,32 @@ This will create a menu entry named "Launch something special" in an "Actions" m
 Sub-menus can be created by adding more levels separated by the :code:`::` characters.
 '''
     )
+
+
+opt('export_layout_state', 'no',
+    option_type='to_bool', ctype='bool',
+    long_text='''
+When enabled, kitty writes the name of the current window layout to a temporary
+file in cache for each instance.
+
+The file is uniquely identified using the :envvar:`KITTY_LISTEN_ON` environment
+variable, ensuring that multiple kitty instances do not interfere with each
+other.
+
+This feature is primarily intended for use by external tools and scripts that
+need to inspect the current layout state of a kitty instance, for example to
+adapt UI behavior based on whether a layout such as :code:`stack` is active.
+
+The file is updated whenever the layout changes via kitty actions such as
+:ac:`goto_layout` or :ac:`next_layout`.
+
+Note that the stored state is ephemeral and may be lost if the temporary
+directory is cleared (for example, on system reboot).
+
+This option does not restore the layout automatically.
+'''
+)
+
 
 
 egr()  # }}}

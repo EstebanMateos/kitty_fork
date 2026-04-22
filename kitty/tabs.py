@@ -299,7 +299,7 @@ class Tab:  # {{{
         self._current_layout_name = layout_name
         self.mark_tab_bar_dirty()
 
-        if get_options().save_layout :
+        if get_options().export_layout_state :
             try:
                 path = os.path.join(cache_dir(), f"layout_state_{self.os_window_id}")
                 with open(path, "w") as f:
